@@ -16,7 +16,7 @@
    CREATE DATABASE store_backend_db;
    CREATE DATABASE store_backend_db_test;
    \l
-   \c storefront_db
+   \c store_backend_db
    \dt
    ```
 5. Open third terminal window and run the commands (here, we will be running db-migrate firstly and then running the application)
