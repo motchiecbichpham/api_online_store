@@ -40,8 +40,13 @@ const create = async (req: Request, res: Response) => {
 };
 //delete product by id
 const remove = async (req: Request, res: Response) => {
-  const deleted = await store.delete(req.body.id);
-  res.json(deleted);
+  try {
+    const deleted = await store.delete(req.body.id);
+    res.json(deleted);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 //product by category
 const productsByCategory = async (req: Request, res: Response) => {

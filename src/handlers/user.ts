@@ -27,14 +27,14 @@ const show = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     const user: User = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
       password: req.body.password,
     };
 
     const newUser = await store.create(user);
     var accessToken = jwt.sign(
-      { firstName: newUser.firstName, password: newUser.password },
+      { first_name: newUser.first_name, password: newUser.password },
       process.env.TOKEN_SECRET || ""
     );
     res.json({ ...newUser, accessToken: accessToken });
@@ -46,12 +46,12 @@ const create = async (req: Request, res: Response) => {
 
 const authenticate = async (req: Request, res: Response) => {
   try {
-    const firstName = req.body.firstName;
+    const first_name = req.body.first_name;
     const password = req.body.password;
-    const currentUser = await store.authenticate(firstName, password);
+    const currentUser = await store.authenticate(first_name, password);
     if (currentUser) {
       var accessToken = jwt.sign(
-        { firstName: currentUser.firstName, passwordp: currentUser.password },
+        { first_name: currentUser.first_name, passwordp: currentUser.password },
         process.env.TOKEN_SECRET || ""
       );
       res.json({ accessToken: accessToken });

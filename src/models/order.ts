@@ -1,5 +1,6 @@
 import Client from "../database";
 export type Order = {
+  title: string;
   user_id: string;
   status: string;
 };
@@ -22,23 +23,23 @@ export class OrderStore {
     }
   }
 
-  async show(id: string): Promise<Order> {
+  async show(title: string): Promise<Order> {
     try {
-      const sql = "SELECT * FROM orders where id=($1)";
+      const sql = "SELECT * FROM orders where title=($1)";
       const conn = await Client.connect();
-      const result = await conn.query(sql, [id]);
+      const result = await conn.query(sql, [title]);
       conn.release();
       return result.rows[0];
     } catch (error) {
-      throw new Error(`Could not find order ${id}. Error ${error}`);
+      throw new Error(`Could not find order ${title}. Error ${error}`);
     }
   }
   async create(o: Order): Promise<Order> {
     try {
       const sql =
-        "INSERT INTO orders (user_id, status) VALUES($1,$2) RETURNING *";
+        "INSERT INTO orders (user_id, status,title) VALUES($1,$2,$3) RETURNING *";
       const conn = await Client.connect();
-      const result = await conn.query(sql, [o.user_id, o.status]);
+      const result = await conn.query(sql, [o.user_id, o.status, o.title]);
       const product = result.rows[0];
       conn.release();
       return product;

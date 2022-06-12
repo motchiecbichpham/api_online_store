@@ -10,21 +10,21 @@ describe("users endpoint response test suite", () => {
     spyOn(UserStore.prototype, "index").and.returnValue(
       Promise.resolve([
         {
-          firstName: "hihi",
-          lastName: "haha",
+          first_name: "hihi",
+          last_name: "haha",
         },
       ])
     );
     spyOn(UserStore.prototype, "show").and.returnValue(
       Promise.resolve({
-        firstName: "hihi",
-        lastName: "haha",
+        first_name: "hihi",
+        last_name: "haha",
       })
     );
     spyOn(UserStore.prototype, "create").and.returnValue(
       Promise.resolve({
-        firstName: "hihi",
-        lastName: "haha",
+        first_name: "hihi",
+        last_name: "haha",
         password: "123",
       })
     );

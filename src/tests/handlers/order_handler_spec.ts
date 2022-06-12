@@ -12,6 +12,7 @@ describe("orders endpoint response test suite", () => {
         {
           user_id: "1",
           status: "completed",
+          title: "1",
         },
       ])
     );
@@ -19,12 +20,14 @@ describe("orders endpoint response test suite", () => {
       Promise.resolve({
         user_id: "1",
         status: "completed",
+        title: "1",
       })
     );
     spyOn(OrderStore.prototype, "create").and.returnValue(
       Promise.resolve({
         user_id: "1",
         status: "completed",
+        title: "1",
       })
     );
     spyOn(OrderStore.prototype, "ordersByUser").and.returnValue(
@@ -32,6 +35,7 @@ describe("orders endpoint response test suite", () => {
         {
           user_id: "1",
           status: "completed",
+          title: "1",
         },
       ])
     );
@@ -40,6 +44,7 @@ describe("orders endpoint response test suite", () => {
         {
           user_id: "1",
           status: "completed",
+          title: "1",
         },
       ])
     );
@@ -49,8 +54,8 @@ describe("orders endpoint response test suite", () => {
     await request
       .post("/users")
       .send({
-        firstName: "hihi",
-        lastName: "haha",
+        first_name: "hihi",
+        last_name: "haha",
         password: "123",
       })
       .expect(200)

@@ -50,7 +50,7 @@ describe("products endpoint response test suite", () => {
     await request
       .post("/users/authenticate")
       .send({
-        firstName: "hihi",
+        first_name: "hihi",
         password: "123",
       })
       .expect(200)

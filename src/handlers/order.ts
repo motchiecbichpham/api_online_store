@@ -29,6 +29,7 @@ const create = async (req: Request, res: Response) => {
     const order: Order = {
       user_id: req.body.user_id,
       status: req.body.status,
+      title: req.body.title,
     };
     const newOrder = await store.create(order);
     res.json(newOrder);
@@ -56,8 +57,13 @@ const addProduct = async (req: Request, res: Response) => {
   }
 };
 const completedOrders = async (req: Request, res: Response) => {
-  const orders = await store.completedOrders(req.params.id);
-  res.json(orders);
+  try {
+    const orders = await store.completedOrders(req.params.id);
+    res.json(orders);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 const ordersByUser = async (req: Request, res: Response) => {
   try {

@@ -6,7 +6,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 ## API Endpoints
 
 1. Users
-Create New user - [POST] /users - (firstName, lastName, password)
+Create New user - [POST] /users - (first_name, last_name, password)
 
 Index - [GET] /users 
 
@@ -62,8 +62,8 @@ Products by category - [GET] /products/category/:category.  token required and c
 
 #### User
 - id
-- firstName
-- lastName
+- first_name
+- last_name
 - password
 
 #### Orders
@@ -79,8 +79,8 @@ Products by category - [GET] /products/category/:category.  token required and c
 1. User
    
     id SERIAL PRIMARY  KEY,
-    firstName VARCHAR(150),
-    lastName VARCHAR(255),
+    first_name VARCHAR(150),
+    last_name VARCHAR(255),
     password_digest VARCHAR(100)
 
 2. Product
