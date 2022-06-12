@@ -5,13 +5,23 @@ import verifyToken from "../middleware/verifyToken";
 const store = new ProductStore();
 //get all products
 const index = async (_req: Request, res: Response) => {
-  const products = await store.index();
-  res.json(products);
+  try {
+    const products = await store.index();
+    res.json(products);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
 };
 //get specific product
 const show = async (req: Request, res: Response) => {
-  const product = await store.show("1");
-  res.json(product);
+  try {
+    const product = await store.show("1");
+    res.json(product);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
 };
 //create product & token require
 const create = async (req: Request, res: Response) => {

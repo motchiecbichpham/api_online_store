@@ -3,9 +3,9 @@ import app from "../../server";
 import { ProductStore } from "../../models/product";
 
 const request = supertest(app);
-const token: string = process.env.TOKEN_TEST as string;
+let token: string;
 
-describe("users endpoint response test suite", () => {
+describe("products endpoint response test suite", () => {
   beforeAll(() => {
     spyOn(ProductStore.prototype, "index").and.returnValue(
       Promise.resolve([
@@ -47,6 +47,16 @@ describe("users endpoint response test suite", () => {
     expect(res.body).toBeDefined();
   });
   it("get all products category endpoint", async () => {
+    await request
+      .post("/users/authenticate")
+      .send({
+        firstName: "hihi",
+        password: "123",
+      })
+      .expect(200)
+      .expect((response) => {
+        token = response.body.accessToken;
+      });
     const res = await request
       .get("/products/category/category")
       .set("Authorization", "Bearer " + token);

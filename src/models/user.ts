@@ -35,7 +35,7 @@ export class UserStore {
       const saltRounds: string = process.env.SALT_ROUNDS as string;
       const pepper: string = process.env.BCRYPT_PASSWORD as string;
       const sql =
-        "INSERT INTO users (firstName, lastName, password_digest) VALUES($1, $2, $3) RETURNING *";
+        "INSERT INTO users (firstName, lastName, password) VALUES($1, $2, $3) RETURNING *";
       const hash = bcrypt.hashSync(u.password + pepper, parseInt(saltRounds));
       const conn = await Client.connect();
       const result = await conn.query(sql, [u.firstName, u.lastName, hash]);
@@ -53,12 +53,12 @@ export class UserStore {
   ): Promise<User | null> {
     const pepper: string = process.env.BCRYPT_PASSWORD as string;
     const conn = await Client.connect();
-    const sql = "SELECT password_digest FROM users WHERE firstName=($1)";
+    const sql = "SELECT password FROM users WHERE firstName=($1)";
     const result = await conn.query(sql, [firstName]);
 
     if (result.rows.length) {
       const user = result.rows[0];
-      if (bcrypt.compareSync(password + pepper, user.password_digest)) {
+      if (bcrypt.compareSync(password + pepper, user.password)) {
         return user;
       }
     }

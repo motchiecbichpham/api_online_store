@@ -3,7 +3,7 @@ import app from "../../server";
 import { UserStore } from "../../models/user";
 
 const request = supertest(app);
-const token: string = process.env.TOKEN_TEST as string;
+let token: string;
 
 describe("users endpoint response test suite", () => {
   beforeAll(() => {
@@ -29,7 +29,14 @@ describe("users endpoint response test suite", () => {
       })
     );
   });
-
+  it("post user creation endpoint", async () => {
+    await request
+      .post("/users")
+      .expect(200)
+      .expect((response) => {
+        token = response.body.accessToken;
+      });
+  });
   it("get all users index endpoint", async () => {
     const res = await request
       .get("/users")
@@ -44,10 +51,5 @@ describe("users endpoint response test suite", () => {
       .set("Authorization", "Bearer " + token);
     expect(res.status).toBe(200);
     expect(res.body).toBeDefined();
-  });
-
-  it("post user creation endpoint", async () => {
-    const res = await request.post("/users");
-    expect(res.status).toBe(200);
   });
 });

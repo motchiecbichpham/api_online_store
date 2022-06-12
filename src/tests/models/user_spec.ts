@@ -3,12 +3,15 @@ import { UserStore, User } from "../../models/user";
 const store = new UserStore();
 
 describe("User Model", () => {
-  it("should have index method", () => {
-    expect(store.index).toBeDefined();
-  });
+  it("should have index method", async function () {
+    const user: User = {
+      firstName: "Legion",
+      lastName: "Honey",
+      password: "123",
+    };
+    await store.create(user);
+    const users = await store.index();
 
-  it("index method should return a list of users", async () => {
-    const result = await store.index();
-    expect(result).toBeDefined();
+    expect(users.length).toBeGreaterThan(0);
   });
 });
