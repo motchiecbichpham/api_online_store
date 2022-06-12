@@ -4,6 +4,39 @@ The company stakeholders want to create an online storefront to showcase their g
 These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application. 
 
 ## API Endpoints
+
+1. Users
+Create New user - [POST] /users - (firstName, lastName, password)
+
+Index - [GET] /users 
+
+Show - [GET] /users/:id - (id and verify by token)
+
+2. Orders
+Create - [POST] /orders - Access token required. (user_id and status)
+
+Index - [GET] /orders - Admin access token required. 
+
+Show - [GET] /orders/orderId - Access token required. 
+
+Add product - [POST] - /orders/:id/add-product- Access token required. order_id, product_id, quantity 
+
+Order by user - [GET] /orders/user_id/:id - Access token required. 
+
+Completed Orders by user - [GET] /users/:id/orders/completed - Access token required. 
+
+3. Products
+Create - [POST] /products - Admin access token required. (name, price, category) 
+
+Index - [GET] /products - Returns all available products in DB
+
+Show - [GET] /products/:id - Returns product details based on given id
+
+Delete - [DELETE] /products -  token required. id of product 
+
+Products by category - [GET] /products/category/:category.  token required and category
+
+
 #### Products
 - Index 
 - Show
@@ -40,3 +73,31 @@ These are the notes from a meeting with the frontend developer that describe wha
 - user_id
 - status of order (active or complete)
 
+----------------------
+#### Database Schema
+
+1. User
+   
+    id SERIAL PRIMARY  KEY,
+    firstName VARCHAR(150),
+    lastName VARCHAR(255),
+    password_digest VARCHAR(100)
+
+2. Product
+
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    price INT NOT NULL,
+    category VARCHAR
+
+3. Order
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) NOT NULL,
+    status VARCHAR NOT NULL
+
+4. Product order
+
+    id SERIAL PRIMARY KEY,
+    quantity INT NOT NULL,
+    order_id INT REFERENCES orders(id) NOT NULL,
+    product_id INT REFERENCES products(id) NOT NULL

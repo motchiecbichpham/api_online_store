@@ -46,7 +46,9 @@ describe("users endpoint response test suite", () => {
   });
 
   it("get all orders index endpoint", async () => {
-    const res = await request.get("/orders");
+    const res = await request
+      .get("/orders")
+      .set("Authorization", "Bearer " + token);
     expect(res.status).toBe(200);
     expect(res.body).toBeDefined();
   });
@@ -58,12 +60,16 @@ describe("users endpoint response test suite", () => {
     expect(res.body).toBeDefined();
   });
   it("get all orders by status endpoint", async () => {
-    const res = await request.get("/users/1/orders/completed");
+    const res = await request
+      .get("/users/1/orders/completed")
+      .set("Authorization", "Bearer " + token);
     expect(res.status).toBe(200);
     expect(res.body).toBeDefined();
   });
   it("get specific order show endpoint", async () => {
-    const res = await request.get("/orders/1");
+    const res = await request
+      .get("/orders/1")
+      .set("Authorization", "Bearer " + token);
     expect(res.status).toBe(200);
     expect(res.body).toBeDefined();
   });
