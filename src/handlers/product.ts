@@ -50,10 +50,15 @@ const remove = async (req: Request, res: Response) => {
 };
 //product by category
 const productsByCategory = async (req: Request, res: Response) => {
-  const products: Product[] = await store.productsByCategory(
-    req.params.category
-  );
-  res.json(products);
+  try {
+    const products: Product[] = await store.productsByCategory(
+      req.params.category
+    );
+    res.json(products);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 const product_routes = (app: express.Application) => {
   app.get("/products", index);
